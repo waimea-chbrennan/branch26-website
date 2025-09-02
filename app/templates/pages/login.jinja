@@ -1,0 +1,41 @@
+{#=====================================================
+  Login Page
+  - TODO: WHAT DOES THIS PAGE DO?
+=====================================================#}
+
+
+
+{% extends 'pages/base.jinja' %}
+
+
+{% block title %}
+
+    Login - NARC
+
+{% endblock %}
+
+
+{% block content %}
+
+  <h2>Login</h2>
+  
+  <form action="/login/submit" method="POST">
+
+      <input
+          type="text"
+          name="callsign"
+          placeholder="Primary Callsign"
+          required
+      >
+
+      <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+      >
+
+      <button>Login</button>
+  </form>    
+
+{% endblock %}

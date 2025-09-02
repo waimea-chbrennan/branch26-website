@@ -12,7 +12,7 @@
 
 <!DOCTYPE html>
 
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 
 <head>
 	<meta charset="utf-8">
@@ -24,7 +24,7 @@
 
     <script src="/static/js/utils.js"></script>
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.slate.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css">
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
@@ -34,13 +34,22 @@
     <header>
         <nav>
             <ul>
-                <li><strong><a href="/">Flask App Demo</a></strong></li>
+                <li><strong><a href="/">Nelson Amateur Radio Club</a></strong></li>
             </ul>
 
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/things">Things</a></li>
-                <li><a href="/about">About</a></li>
+                {% if not user.is_authenticated %}
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/hamcram">HamCram</a></li>
+                    <li><a role="button" href="/login">Log In</a></li>
+                {% else %}
+                    <li><a href="/activities">Activities</a></li>
+                    <li><a href="/resources">Resources</a></li>
+                    <li><a href="/profile">My Profile</a></li>
+                    <li><a role="button" href="/logout">Log Out</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>

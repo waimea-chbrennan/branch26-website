@@ -1,0 +1,39 @@
+{#=====================================================
+  Contact Page
+  - We show the list of members which have been approved by the committee to be public contacts for the club
+  - We should obscure their contact information to stop bots scraping it to align with privacy implications
+=====================================================#}
+
+
+
+{% extends 'pages/base.jinja' %}
+
+
+{% block title %}
+
+    Contact - NARC
+
+{% endblock %}
+
+
+{% block content %}
+
+    <h2>Our Designated Contacts:</h2>
+
+    <div>
+        {% for contact in contacts %}
+            <article>
+                <h3>{{contact.name}} {{contact.callsign}}</h3>
+                {% if contact.email_public%}
+                  <p>Email: {{contact.email}}</p>
+                {% endif %}
+                {% if contact.phone_public%}
+                  <p>Phone: {{contact.phone}}</p>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+
+    
+
+{% endblock %}

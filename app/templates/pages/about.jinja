@@ -1,77 +1,41 @@
 {#=====================================================
-  About page (DEMO)
-  - Information about Flask
-  - Information about Jinja
-  - Information about Turso
-  - Information about PicoCSS
+  About Page
+  - TODO: WHAT DOES THIS PAGE DO?
 =====================================================#}
+
+
 
 {% extends 'pages/base.jinja' %}
 
 
 {% block title %}
 
-    Flask Demo - About Flask and Jinja
+    About - NARC
 
 {% endblock %}
 
 
 {% block content %}
 
-    <section id="tech-stack">
+    <article>
+      <p>Nelson Amateur radio club was formed quite a wee while now but since then we have done a lot.
+      At some point in our history we have been the largest Amateur radio club in all NZ.
+      </p>
+      <img src="/static/images/old_repeater.jpg" alt="Historical image of club working on a remote antenna">
+    </article>
 
-        <article>
-            <header>
-                <img src="/static/images/flask.webp" alt="Flask Logo">
-            </header>
+    <article>
+      <p>We own and operate repeaters on 2m and 70cm FM on leased sites:</p>
+      <p><strong>147.025 RX 147.625 TX</strong> 7025 is our repeater with most activity.</p>
+      <p><strong>147.200 RX 147.800 TX</strong> 720 focuses on areas towards north of Nelson and is Solar Powered</p>
+      <img src="/static/images/fox_hunt.jpg" alt="Club members meeting to discuss transmitter hunt.">
+    </article>
 
-            <p>Flask is a <strong>web back-end application framework</strong>, written in <strong>Python</strong>. Created in 2010, Flask is regularly voted the most popular Python web framework. Applications that use Flask include Pinterest and LinkedIn.</p>
+    <article>
+      <p>We now have over 60 members and host 2 HamCrams each year, allowing people in the Nelson Reigon to get their ham license.</p>
+      <img src="/static/images/saddle_hill.jpg" alt="Image from the same repeater site as historical image">
 
-            <footer>
-                <p>Find out more about <a href="https://flask.palletsprojects.com/en/stable/">Flask</a></p>
-            </footer>
-        </article>
-
-
-        <article>
-            <header>
-                <img src="/static/images/jinja2.png" alt="Jinja Logo">
-            </header>
-
-            <p>Jinja is a <strong>templating engine</strong>. Special placeholders in the template allow data to be passed into the template and programmatic operations (e.g. conditions, loops, etc.) using a syntax similar to Python.</p>
-
-            <footer>
-                <p>Find out more about <a href="https://jinja.palletsprojects.com/en/stable/">Jinja</a></p>
-            </footer>
-        </article>
-
-
-        <article>
-            <header>
-                <img src="/static/images/turso.png" alt="Turso Logo">
-            </header>
-
-            <p>Turso is a <strong>managed database platform</strong> that hosts SQLite-like databases which can be accessed from anywhere via a simple API. The Python API allows for <strong>SQL</strong> commands to be run, returning results as Python dicts.</p>
-
-            <footer>
-                <p>Find out more about <a href="https://tuso.tech/">Turso</a></p>
-            </footer>
-        </article>
-
-
-        <article>
-            <header>
-                <img src="/static/images/picocss.png" alt="PicoCSS Logo">
-            </header>
-
-            <p>PicoCSS is a minimalist and lightweight <strong>starter stylesheet</strong> that prioritizes semantic syntax, making every HTML element responsive and elegant by default. It acts as a great starting point for any website.</p>
-
-            <footer>
-                <p>Find out more about <a href="https://picocss.com">PicoCSS</a></p>
-            </footer>
-        </article>
-
-    </section>
+    </article>
+    
 
 {% endblock %}
-

@@ -1,0 +1,31 @@
+{#=====================================================
+  Resources Page
+  - We need to display the entries of files: Create a bunch of links with the file title and link to associated url.
+=====================================================#}
+
+
+
+{% extends 'pages/base.jinja' %}
+
+
+{% block title %}
+
+    Resources - NARC
+
+{% endblock %}
+
+
+{% block content %}
+
+    <h2>Resources</h2>
+    <section>
+      {% for resource in resources %}
+        <article class="resource">
+          <h4>{{resource.title}}</h4>
+          <a href="{{resource.url}}">Go to Resource</a>
+        </article>
+        {% endfor %}
+    </section>
+    
+
+{% endblock %}

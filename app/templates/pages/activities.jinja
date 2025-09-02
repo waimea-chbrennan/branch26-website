@@ -1,0 +1,97 @@
+{#=====================================================
+  Activities Page
+  - Shows all recent and upcoming activities and allow members to post new activities
+=====================================================#}
+
+
+
+{% extends 'pages/base.jinja' %}
+
+
+{% block title %}
+
+    Activities - NARC
+
+{% endblock %}
+
+
+{% block content %}
+
+    <h2>All Upcoming Activities</h2>
+
+    <section>
+      {% for activity in activities %}
+        <article>
+          <h3>{{activity.title}}</h3>
+          <p>{{activity.description}}</p>
+        </article>
+      {% endfor %}
+    </section>
+    
+
+    
+
+    {# New Activity form#}
+    <form action="/activities/new" method="POST">
+      <h2>New Activity</h2>
+
+      Title
+      <input 
+        type="text" 
+        name="title"
+        required
+        >
+
+      Description
+      <input 
+        type="text" 
+        name="description"
+        required
+      >
+
+      Start Time
+      <input 
+        type="datetime-local"
+        name="start_time"
+        required
+      >
+
+      End Time
+      <input 
+        type="datetime-local"
+        name="end_time"
+        required
+      >
+      <datalist id="resources">
+        {%  for resource in resources %}
+        <option value="{{resource.title}}">
+        {% endfor %}
+      </datalist>
+
+      Associated Resources
+      <input
+        type="search"
+        list="resources"
+        name="resource"
+        pattern="^({{ resources | map(attribute='title') | join('|') }})"
+      >
+
+      Is activity public?
+      <input 
+        type="checkbox" 
+        name="public"
+        placeholder="False"
+        {% if not user.can_post_public %}
+        readonly
+        disabled
+        {% endif %}
+      >
+
+      <button>Post</button>
+
+
+    
+    
+    </form>
+
+{% endblock %}
