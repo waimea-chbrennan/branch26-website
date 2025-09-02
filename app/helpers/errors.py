@@ -4,6 +4,7 @@
 
 from flask import render_template
 from colorama import Fore, init
+from flask_login import current_user
 import traceback
 import sys
 
@@ -20,14 +21,14 @@ ERR_BAR = f"{ERR_COL}!{Fore.RESET}"
 # 500 Server error page
 #-----------------------------------------------------------
 def server_error(message):
-    return render_template("pages/500.jinja", error=message), 500
+    return render_template("pages/500.jinja", error=message, user=current_user), 500
 
 
 #-----------------------------------------------------------
 # 404 Page not found error page
 #-----------------------------------------------------------
 def not_found_error():
-    return render_template("pages/404.jinja"), 404
+    return render_template("pages/404.jinja", user=current_user), 404
 
 
 #-----------------------------------------------------------

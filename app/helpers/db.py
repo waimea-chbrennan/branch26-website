@@ -2,7 +2,7 @@
 # Database Related Functions
 #===========================================================
 
-from libsql_client import create_client_sync, LibsqlError
+from libsql_client import *
 from contextlib import contextmanager
 from dotenv import load_dotenv
 from os import getenv

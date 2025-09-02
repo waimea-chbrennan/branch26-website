@@ -16,3 +16,7 @@ colorama
 
 # Timezones
 tzdata
+
+
+# Flask Login Functionality
+flask-login
