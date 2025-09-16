@@ -26,6 +26,27 @@
         </article>
         {% endfor %}
     </section>
+
+
+    <h2>Add Resource</h2>
+    <section>
+      <form action="/resources/new" method="POST">
+        Resource Title
+        <input 
+          type="text"
+          name="title"
+          required
+        >
+        Link to accessible resource
+        <input 
+          type="text"
+          name="url"
+          required
+        >
+      
+        <button>Add</button>
+      </form>
     
+    </section>    
 
 {% endblock %}
