@@ -1,0 +1,78 @@
+{#=====================================================
+  Administration page
+  - Allows committee to send user invites to new members 
+  - Allows committee to delete users (prompt confirmation needed)
+  - Allows committee to delete resources and delete activities
+=====================================================#}
+
+
+
+{% extends 'pages/base.jinja' %}
+
+
+{% block title %}
+
+    Admin - NARC
+
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>Administration Page</h1>
+
+    <section>
+      <h2>Invite User</h2>
+      <form action="/admin/invite-user" method="POST">
+        Full name
+        <input 
+          type="text"
+          name="name"
+          required
+        >
+        Callsign
+        <input 
+          type="text"
+          name="callsign"
+          required
+        >
+        Email
+        <input 
+          type="email" 
+          name="email" 
+          required
+        >
+        <button>Add</button>
+
+      </form>
+    </section>
+    
+
+    <section>
+      <h2>Manage Members</h2>
+      {% for member in members %}
+        <div>
+          <h4>{{member.name}} {{member.callsign}}</h4>
+          <a onclick="return confirm_action('{{member.callsign}}')" href="/admin/remove-member/{{member.callsign}}">Delete Member Permanently</a>
+        </div>
+      {% endfor %}
+    </section>
+
+
+    <section>
+      <h2>Manage Activities</h2>
+      {% for activity in activities %}
+        <div>
+          <h4>{{activity.title}}</h4>
+          <p>{{activity.description}}</p>
+          <p>Location: {{activity.location}}</p>
+          <p>Posted By: {{activity.posted_by}}</p>
+          <a onclick="return confirm_action('{{activity.title}}')" href="/admin/remove-activity/{{activity.id}}">Delete Activity Permanently</a>
+        </div>
+      {% endfor %}
+    </section>
+
+
+
+
+{% endblock %}

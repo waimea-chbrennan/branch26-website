@@ -16,8 +16,18 @@ from app.helpers.db      import connect_db
 from app.helpers.errors  import init_error, not_found_error
 from app.helpers.logging import init_logging
 from app.helpers.time    import init_datetime, utc_timestamp, utc_timestamp_now
+
+# Login functionality
 from flask_login         import *
 from werkzeug.security import generate_password_hash, check_password_hash
+
+# SMTP functionality
+from smtplib            import SMTP
+from dotenv import load_dotenv
+from os import getenv
+from secrets import token_urlsafe
+from email.mime.text import MIMEText
+from email.utils import formataddr
 
 # Configure Login Manager
 login_manager = LoginManager()
@@ -40,7 +50,17 @@ login_manager.init_app(app) # Attaches login manager for use in app.
 def index():
     with connect_db() as client:
         # Update to where approvals>2
-        sql = "SELECT id, title, description, start_time, end_time, created_time, posted_by FROM activities "
+        sql = """
+            SELECT 
+            id, title, description, start_time, end_time, created_time, posted_by, location 
+            FROM activities 
+            WHERE id IN (
+                SELECT approvals.id
+                FROM approvals approvals
+                GROUP BY approvals.id
+                HAVING COUNT(approvals.id) >=2
+            );
+            """
         params = []
         result = client.execute(sql, params)
         activities = result.rows
@@ -90,7 +110,7 @@ def hamcram():
 
 # User class to handle data with UserMixin for base attributes and functions from flask-login
 class User(UserMixin):
-    def __init__(self, callsign, name, email, phone, email_public, phone_public, is_official_contact, can_post_public, password): #These params are passed when unpacking using * operator 
+    def __init__(self, callsign, name, email, phone, email_public, phone_public, is_official_contact, password, is_committee): #These params are passed when unpacking using * operator 
         self.id = callsign  # Id is used by flask_login
         self.callsign = callsign
         self.password = password
@@ -100,14 +120,14 @@ class User(UserMixin):
         self.email_public = email_public
         self.phone_public = phone_public
         self.is_official_contact = is_official_contact
-        self.can_post_public = can_post_public
+        self.is_committee = is_committee
 
 
 
 @login_manager.user_loader
 def get_user_by_callsign(callsign):
     with connect_db() as client:
-        sql = "SElECT callsign, name, email, phone, email_public, phone_public, is_official_contact, can_post_public, password FROM members WHERE callsign=?"
+        sql = "SElECT callsign, name, email, phone, email_public, phone_public, is_official_contact, password, is_committee FROM members WHERE callsign=?"
         params = [callsign]
         result = client.execute(sql, params)
 
@@ -121,20 +141,6 @@ def get_user_by_callsign(callsign):
         return User(*member)
         
 
-
-######## TESTING ONLY
-@app.get("/newuser/<string:callsign>/<string:password>")
-@login_required
-def newuser(callsign, password):
-    password_hash = generate_password_hash(password)
-    with connect_db() as client:
-        sql = """INSERT INTO members 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-        params = [callsign, "NAME", "EMAIL@COM", "1234321", 0, 0, 0, 0, password_hash]
-        result = client.execute(sql,params)
-
-    return "User added"
-    
 
 
 
@@ -213,6 +219,7 @@ def new_activity():
     end_time = request.form.get("end_time")
     title = request.form.get("title")
     description = request.form.get("description")
+    location = request.form.get("location")
     resource = request.form.get("resource")
     approvable = request.form.get("is_approvable")
 
@@ -221,8 +228,8 @@ def new_activity():
 
   
     with connect_db() as client:
-        sql = "INSERT INTO activities (posted_by, start_time, end_time, title, description, resource, approvable) VALUES (?,?,?,?,?,?,?)"
-        params = [current_user.callsign, start_time, end_time, title, description, resource, approvable]
+        sql = "INSERT INTO activities (posted_by, start_time, end_time, title, description, location, resource, approvable) VALUES (?,?,?,?,?,?,?,?)"
+        params = [current_user.callsign, start_time, end_time, title, description, location, resource, approvable]
         activities = client.execute(sql, params)
     
 
@@ -339,11 +346,144 @@ def resources():
 @app.post("/resources/new")
 @login_required
 def add_resource():
+    title = request.form.get("title")
+    url = request.form.get("url")
     with connect_db() as client:
-        sql = "INSERT title, url INTO resources VALUES (?,?)"
+        sql = "INSERT INTO resources (title, url)VALUES (?,?)"
         params = [title, url]
         resources = client.execute(sql, params)
 
         return redirect("/resources")
 
 
+#-----------------------------------------------------------
+# Administration page
+#-----------------------------------------------------------
+@app.get("/admin")
+@fresh_login_required
+def show_admin():
+    # Determine whether user is a committee member
+    if current_user.is_committee:
+        #Get the list of members and activities to prompt deletion
+        with connect_db() as client:
+            sql = "SELECT callsign, name FROM members ORDER BY callsign ASC"
+            params = []
+            result = client.execute(sql, params)
+            members = result.rows
+
+        with connect_db() as client:
+            sql = "SELECT id, title, description, posted_by, location FROM activities ORDER BY title ASC"
+            params = []
+            result = client.execute(sql, params)
+            activities = result.rows
+
+        
+        return render_template("pages/administration.jinja", user=current_user, members=members, activities=activities)
+    # Else
+    return redirect("/")
+
+#-----------------------------------------------------------
+# Admin remove user
+#-----------------------------------------------------------
+
+@app.get("/admin/remove-member/<string:callsign>")
+@fresh_login_required
+def delete_user(callsign):
+    #Cant rely on security check on showing admin page, could still send request manually
+    if current_user.is_committee:
+        with connect_db() as client:
+            sql = "DELETE FROM members WHERE callsign=?"
+            params = [callsign]
+            client.execute(sql, params)
+        flash("Member deleted successfully")
+        return redirect("/admin")
+    # Else
+    return redirect("/")
+
+
+#-----------------------------------------------------------
+# Admin remove activity
+#-----------------------------------------------------------
+
+@app.get("/admin/remove-activity/<int:id>")
+@fresh_login_required
+def delete_activity(id):
+    #Cant rely on security check on showing admin page, could still send request manually
+    if current_user.is_committee:
+        with connect_db() as client:
+            sql = "DELETE FROM activities WHERE id=?"
+            params = [id]
+            client.execute(sql, params)
+        flash("Activity deleted successfully")
+        return redirect("/admin")
+    # Else
+    return redirect("/")
+
+
+
+
+
+
+#-----------------------------------------------------------
+# Admin Invite Member
+#-----------------------------------------------------------
+@app.post("/admin/invite-user")
+@fresh_login_required
+def invite_user():
+    #Cant rely on security check on showing admin page, could still send request manually
+    if current_user.is_committee:
+        # Get new user info 
+        user_name = request.form.get("name").title()
+        user_callsign = request.form.get("callsign").upper()
+        user_email = request.form.get("email")
+        user_password = generate_password_hash(token_urlsafe(7)) # easy implementation of secure temporary password, approx 10 char
+        hashed_user_password = generate_password_hash(user_password)
+
+
+        #Send Invite Email
+        send_invite_email(user_name, user_callsign, user_password, user_email)
+        
+        #Update database with callsign, name, email
+        with connect_db() as client:
+            sql = "INSERT INTO members (callsign, name, email, password) VALUES (?,?,?,?)"
+            params = [user_callsign, user_name, user_email, hashed_user_password]
+            client.execute(sql, params)
+
+        
+
+        return render_template("pages/administration.jinja", user=current_user)
+
+    #Redirect home, 
+    return redirect("/")
+
+
+
+def send_invite_email(user_name, user_callsign, user_password, user_email):
+    #Send email with generated password to email including name etc
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    load_dotenv()
+    smtp_key = getenv("SMTP_KEY")
+
+    sender_email = "nelsonradioclub@gmail.com"
+    sender_name = "Nelson Amateur Radio Club"
+
+    body = f"""Hello {user_name} ({user_callsign}),
+
+    You have been invited to join the new NZART Branch 26 Website!
+    Your temporary password is: {user_password}
+    Please change this on login
+
+    73,
+    Nelson Amateur Radio Club
+    """
+
+    msg = MIMEText(body, "plain", "utf-8")
+    msg["From"] = formataddr((sender_name, sender_email))
+    msg["To"] = user_email
+    msg["Subject"] = "Invite to Branch 26 Nelson Amateur Radio Club Website"
+
+    with SMTP(smtp_server, smtp_port) as server:
+        server.starttls()
+        server.login(sender_email, smtp_key)
+        server.send_message(msg)  

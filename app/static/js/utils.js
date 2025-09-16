@@ -29,3 +29,11 @@ window.onload = (event) => {
 
 };
 
+function confirm_action(confirm_text){
+    input = prompt(`Type '${confirm_text}' to delete item.`)
+    if (input==confirm_text) {
+        // User typed the correct confirmation to perform action
+        return true
+    }
+    return false
+}
