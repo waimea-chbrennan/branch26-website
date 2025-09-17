@@ -49,6 +49,13 @@
         required
       >
 
+      Location
+      <input 
+        type="text" 
+        name="location"
+        required
+      >
+
       Start Time
       <input 
         type="datetime-local"
@@ -76,15 +83,11 @@
         pattern="^({{ resources | map(attribute='title') | join('|') }})"
       >
 
-      Is activity public?
+      Request Activity To Be Public?
       <input 
         type="checkbox" 
-        name="public"
+        name="is_approvable"
         placeholder="False"
-        {% if not user.can_post_public %}
-        readonly
-        disabled
-        {% endif %}
       >
 
       <button>Post</button>
