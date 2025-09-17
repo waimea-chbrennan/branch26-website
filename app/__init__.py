@@ -49,24 +49,30 @@ login_manager.init_app(app) # Attaches login manager for use in app.
 @app.get("/")
 def index():
     with connect_db() as client:
-        # Update to where approvals>2
+        # Only want activities that have had at least 2 approvals
         sql = """
-            SELECT 
-            id, title, description, start_time, end_time, created_time, posted_by, location 
-            FROM activities 
-            WHERE id IN (
-                SELECT approvals.id
-                FROM approvals approvals
-                GROUP BY approvals.id
-                HAVING COUNT(approvals.id) >=2
+        SELECT 
+            id, title, description, start_time, end_time, 
+            created_time, posted_by, location
+            FROM activities
+            WHERE id IN (   
+                SELECT
+                activity FROM approvals
+                GROUP BY activity
+                HAVING COUNT(*) > 1
             );
-            """
+        """
         params = []
         result = client.execute(sql, params)
         activities = result.rows
-        print(activities)
+        
+        # Get approvals for display with activities
+        sql = "SELECT activity, approver FROM approvals"
+        params = []
+        result = client.execute(sql, params)
+        approvals = result.rows
 
-        return render_template("pages/home.jinja", activities=activities, user=current_user)
+        return render_template("pages/home.jinja", activities=activities, approvals=approvals, user=current_user)
 
 
 #-----------------------------------------------------------
