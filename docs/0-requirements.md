@@ -6,12 +6,10 @@ Branch 26 needs a website! They need a way to advertise the hobby of amateur rad
 
 ## End-User Requirements
 
-Replace this text with a description of your typical end-users and their specific needs / expectations / requirements.
 This site will have to cater to the general public and to the members of the club which have a wide demographic. There is a left skew in the age with many members being older men but most people who join are often younger and from a wider background. Some users are extremely tech savvy while others are not and this range will have to be considered in development. Members and the general public will likely access the site from mobile or desktop.
 
 ## Proposed Solution
 
-Replace this text with a brief statement about the system that you intend to create, including the key functionality it should have.
 The website will have a member login functionality that will restrict access to certain portions of the site (such as viewing member only activities or posting activities) to active club members. Activities should be able to be posted with different titles, descriptions and starting and ending dates (may run more than a day) and a member may have many activities posted at once. The club committee should be able to remove or edit details of any activity and to have some ability to edit the content of pages on the site.
 
 ---
@@ -24,12 +22,11 @@ Functionality implications are all about the website being able to perform it's 
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+If the website does not work, it will not be adopted by members of the branch because the members will lose trust and patience with it working to inform them of the activities. This is particularly important as the site requires members to be active to post activities or else it will serve no use and it will definitely not be used. 
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
+I will test each part of the functionality of the system to make sure it works, and it works consistently in a way that the user expects. I need to test enough functionality to ensure that the users will be happy (viewing, posting and approving activities, adding and viewing resources etc as well as ensuring the public facing section of the website is attractive to non-members). Testing should cover all ranges and types of inputs.
 
 
 ## Usability Implications
@@ -38,12 +35,11 @@ Usability is about how easy it is for the user to do the task that they wanted w
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+This site, ideally deployed, should become a regular part of club life as the club constantly have activities. It is not good enough that the website is possible to use, it should nice for members to use otherwise they won't use it anyway.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
+I can always do my best to try and improve usability as I improve functionality but ultimately user trialing and stakeholder feedback will allow me to best improve usability. I should also follow Neilson's usability heuristics during the design process especially consistency and standards, flexibility and efficiency etc.
 
 
 ## Aesthetic Implications
@@ -52,12 +48,11 @@ Aesthetic implications are all about whether the website actually looks okay (or
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+It is important to have good aesthetics for this project especially as the public facing section of the website will be the non-members first impressions of the club so if we want to make a good impression to convince them to join the site should look the part.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
+I am not the best graphic designer so getting good feedback from the branch committee is essential to identify what looks good and what does not, which can hopefully allow me then to change what has to be changed and make it look like what does look good until the website looks okay. What I can do is follow best practices when designing including selecting good colour, fonts and layout according to principles such as colour harmonies, structure, repetition, contrast etc.
 
 
 ## Privacy Implications
@@ -72,7 +67,7 @@ The members of branch 26 will have some data held on the website such as callsig
 
 - When storing the user's secured info in our database we can perform password hashing to ensure that no-one that gets access to the database (me included) can see the member's passwords which may be used in other places which would compromise their security. 
 - We can use obfuscation tools when displaying our designated contacts info to prevent web crawlers harvesting it.
-
+- Inform users during onboarding that their personal information will be handled to be transparent (also saying what information)
 
 ## Accessibility Implications
 
@@ -84,8 +79,7 @@ There are a lot of elderly members in the club and the website should also be ab
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
+We can follow accessibility best practices such as using alt text and ensuring proper HTML hierarchy for compatibility with screen readers. We can also do testing on elements such as text to ensure that contrast is appropriate for those with impaired vision. Ensuring good design choices such as good fonts and sizing is also important for clarity and usability for all.
 
 
 ## End-User Implications
@@ -94,8 +88,8 @@ End-user implications are about meeting the users specific needs for using the s
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+It is important to meet what the members (and general public) need from the branch website or else they will not want to engage with the website at all which will result in it becoming useless if no activities would be posted.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
+I know that the demographic of members is extremely diverse and that members will want to use the site on a range of devices so we should ensure that we cater for this. Checking in with the committee for feedback also helps here as they will know their various needs that I need to cater to better and we can use this to develop the website accordingly.
