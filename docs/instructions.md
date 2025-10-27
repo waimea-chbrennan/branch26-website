@@ -95,9 +95,9 @@ Use advanced techniques to develop a database means that, taking into account th
 
 
 2. You need to design the structure of the database:
-   - [ ] **Tables** - at least two that are linked by a relationship
-   - [ ] **Data Types** - a range of data types used
-   - [ ] **Key Fields** - primary keys for each table, foreign keys for relationships
+   - [x] **Tables** - at least two that are linked by a relationship
+   - [x] **Data Types** - a range of data types used
+   - [x] **Key Fields** - primary keys for each table, foreign keys for relationships
    - [ ] **Values** - auto-generation / default values as required
 
 3. You should use appropriate tools and advanced techniques to organise and query the data:
@@ -107,10 +107,10 @@ Use advanced techniques to develop a database means that, taking into account th
 
 4. You should use appropriate tools and advanced techniques to present the data:
    - [ ] Customising **presentation** of the data (not just raw data values)
-   - [ ] Using **custom forms** to add user input to the database
-   - [ ] Setting **validation rules** for data entry
+   - [x] Using **custom forms** to add user input to the database
+   - [x] Setting **validation rules** for data entry
 
-5. You must apply appropriate data integrity and testing procedures:
+5. You must apply appropriate data integrity and testing procedures: (via testing)
    - [ ] Show that any **presented data is correct** (e.g. matches database values / calculations)
    - [ ] Show that any input user data **updates the database as expected**
 
@@ -145,7 +145,7 @@ Use advanced techniques to develop a refined database means **all of the criteri
 
 1. You have made iterative improvements throughout the design, development and testing process:
    - [ ] You have refined features of the DB (the schema and the UI) over **multiple iterations**
-   - [ ] Each iteration is **clearly documented**, showing testing and resulting refinements
+   - [ ] Each iteration is **clearly documented**, showing testing and resulting refinements (ie making a change and making sure that it works)
 
 2. You present the data from the database effectively for the purpose and end users:
    - [ ] Data is displayed in ways that make its **meaning clear** (e.g. using colour)
@@ -177,9 +177,9 @@ Use advanced techniques to develop a digital media outcome means that, taking in
    - [ ] Define the **key functionality** of the proposed system
 
 2. You need to use appropriate advanced tools and techniques:
-   - [ ] You have used a suitable third-party **web back-end library** (e.g. Flask / Jinja)
-   - [ ] You have **written or customised scripts** to implement functionality (e.g. Python)
-   - [ ] You have processed data using a **combination of steps** (e.g. data obtained via DB queries, inserted into HTML templates, styled via CSS)
+   - [x] You have used a suitable third-party **web back-end library** (e.g. Flask / Jinja)
+   - [x] You have **written or customised scripts** to implement functionality (e.g. Python)
+   - [x] You have processed data using a **combination of steps** (e.g. data obtained via DB queries, inserted into HTML templates, styled via CSS)
 
 3. You must apply appropriate data integrity and testing procedures:
    - [ ] All webpage text should be checked for **accuracy** (e.g. spell-checked)
@@ -204,8 +204,8 @@ Use advanced techniques to develop a digital media outcome means that, taking in
 Use advanced techniques to develop an informed digital media outcome means **all the criteria for Achieved**, plus:
 
 1. You should use information from testing procedures to improve the quality of your web site:
-   - [ ] Show **evidence of your testing**, particularly with end-users
-   - [ ] Show the **improvements made** as a result
+   - [x] Show **evidence of your testing**, particularly with end-users
+   - [x] Show the **improvements made** as a result
 
 2. You should apply relevant conventions to improve the quality of the outcome:
    - [ ] Your web site works on a **variety of screen sizes** (as appropriate)
