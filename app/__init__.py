@@ -204,15 +204,53 @@ def activities():
         sql = "SELECT * FROM activities ORDER BY start_time ASC"
         params = []
         activities = client.execute(sql, params)
+
     # Get ze resources
     with connect_db() as client:
         sql = "SELECT * FROM resources ORDER BY title ASC"
         params = []
         resources = client.execute(sql, params)
 
-    
+    # Get the approvals   
+    with connect_db() as client:
+        sql = "SELECT id, activity, approver FROM approvals"
+        params = []
+        approvals = client.execute(sql, params)
+        approvals_by_activity = {}
+        for approval in approvals:
+            activity_id = int(approval["activity"])
+            if activity_id not in approvals_by_activity:
+                approvals_by_activity[activity_id] = []
+            approvals_by_activity[activity_id].append(approval["approver"])
+            print(approvals_by_activity)
+    return render_template("pages/activities.jinja", user=current_user, activities=activities, resources=resources, approvals_by_activity=approvals_by_activity)
 
-    return render_template("pages/activities.jinja", user=current_user, activities=activities, resources=resources)
+
+#-----------------------------------------------------------
+# Member approving activity route (login required)
+#-----------------------------------------------------------
+@app.get("/add-approval/<int:activity>")
+@login_required
+def add_approval(activity):
+    callsign = current_user.callsign
+    with connect_db() as client:
+        sql = "SELECT posted_by FROM activities WHERE id=?"
+        params = [activity]
+        activity_by = client.execute(sql, params)
+
+        # make sure user is not approving own activity (forbidden)
+        if (current_user.callsign):
+            return redirect("/activities/"), 403
+
+
+        sql = "INSERT INTO approvals (activity, approver) VALUES (?,?)"
+        params = [activity, current_user.callsign]
+        client.execute(sql, params)
+
+  
+  
+    return redirect("/activities/")
+
 
 
 #-----------------------------------------------------------
@@ -231,6 +269,8 @@ def new_activity():
 
     # Sanitize 
     approvable = 1 if approvable else 0 
+    start_time = datetime.fromisoformat(start_time)
+    end_time = datetime.fromisoformat(end_time)
 
   
     with connect_db() as client:

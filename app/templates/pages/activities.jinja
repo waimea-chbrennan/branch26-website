@@ -16,17 +16,45 @@
 
 
 {% block content %}
+<h2>All Upcoming Activities</h2>
 
-    <h2>All Upcoming Activities</h2>
+<section>
+  {% for activity in activities %}
+    <article>
+      <h3>{{ activity.title }}</h3>
+      <p>{{ activity.description }}</p>
+      <p>{{ activity.location }}</p>
 
-    <section>
-      {% for activity in activities %}
-        <article>
-          <h3>{{activity.title}}</h3>
-          <p>{{activity.description}}</p>
-        </article>
-      {% endfor %}
-    </section>
+      <p>Starts:
+  {{ activity.start_time | localday }},
+  {{ activity.start_time | localdate }} at
+  {{ activity.start_time | localtime }}
+</p>
+      <p>Ends: 
+      {{ activity.end_time | localday }}
+      {{ activity.end_time | localtime }}
+
+      </p>
+      <p>Posted By: {{ activity.posted_by }}</p>
+
+      {% if activity.approvable %}
+      <p>
+      
+        {% set a = approvals_by_activity.get(activity.id) %}
+        {% if a %}
+          Approved by: {{ a | join(', ') }}
+        {% else %}
+          Approved by: (none yet)
+        {% endif %}
+      </p>
+       
+        
+        <a href="/add-approval/{{ activity.id }}">Add Your Approval</a>
+      {% endif %}
+    </article>
+  {% endfor %}
+</section>
+
     
 
     

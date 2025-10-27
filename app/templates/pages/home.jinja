@@ -15,23 +15,44 @@
 
 {% block content %}
 
-    <h1>Nelson Amateur Radio Club</h1>
-    <h2>We are a vibrant amateur radio community with over 60 members in Nelson, NZ!</h2>
+    <section class="split-row">
+        <img src="static/images/sylvester_antenna.jpeg" alt="Wide shot of antenna setup at Lake Sylvester">
+    
+        <div>
+            <h1>Nelson Amateur Radio Club</h1>
+            <h2>We are a vibrant amateur radio community with over 60 members in Nelson, NZ!</h2>
+        </div>
+       
+    </section>
 
-    <div>
-        {% for activity in activities %}
-            <article>
-                <h3>{{activity.title}}</h3>
-                <p>{{activity.description}}</p>
-                <p>{{activity.location}}</p>
-                <p>Starts: {{activity.start_time}}</p>
-                <p>Ends: {{activity.end_time}}</p>
+    
+    <section class="split-row">
+        <div>
+            <h2>Upcoming Events</h2>
+            {% for activity in activities %}
+                <article>
+                    <h3>{{activity.title}}</h3>
+                    <p>{{activity.description}}</p>
+                    <p>{{activity.location}}</p>
+                    <p>Starts: {{activity.start_time}}</p>
+                    <p>Ends: {{activity.end_time}}</p>
 
-                <p>Posted By: {{activity.posted_by}}</p>
+                    <p>Posted By: {{activity.posted_by}}</p>
 
-            </article>
-        {% endfor %}
-    </div>
+                </article>
+            {% endfor %}
+        </div>
+
+        <div>
+            <h2>What we do</h2>
+            <img src="static/images/tent_banner.jpg" alt="Radio tent with Nelson radio banner on it">
+            <p>We meet regularly and do cool stuff like...
+                Not yet a member but want to become involved in amateur radio? We can help you get your license and join our club!</p>
+            <a href="/contact" role="button">Join Us</a>
+        </div>
+    
+    </section>
+    
    
 
     
