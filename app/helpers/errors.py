@@ -30,6 +30,19 @@ def server_error(message):
 def not_found_error():
     return render_template("pages/404.jinja", user=current_user), 404
 
+#-----------------------------------------------------------
+# 401 unauthorised error
+#-----------------------------------------------------------
+def unauthorised_error():
+    return render_template("pages/401.jinja", user=current_user), 401
+
+#-----------------------------------------------------------
+# 403 Forbidden error
+#-----------------------------------------------------------
+def forbidden_error():
+    return render_template("pages/403.jinja", user=current_user), 403
+
+
 
 #-----------------------------------------------------------
 # Provide error handlers to the Flask app
@@ -42,6 +55,20 @@ def init_error(app):
     @app.errorhandler(404)
     def show_not_found(e):
         return not_found_error()
+
+    #------------------------------
+    # 403 Forbidden error page
+    #------------------------------
+    @app.errorhandler(404)
+    def show_forbidden(e):
+        return forbidden_error()
+
+    #------------------------------
+    # 401 unauthorised error page
+    #------------------------------
+    @app.errorhandler(401)
+    def show_unauthorised(e):
+        return unauthorised_error()
 
 
     #------------------------------
