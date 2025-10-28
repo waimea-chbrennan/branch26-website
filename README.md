@@ -21,7 +21,8 @@ Nelson Amateur Radio Club (referred to as B26/ Branch 26) needs a public facing 
 ## Project Links
 
 - [GitHub repo for the project](https://github.com/waimea-chbrennan/branch26-website)
-- [Live web app](https://...)
+- [Project Documentation](https://waimea-chbrennan.github.io/branch26-website/)
+- [Live web app](https://branch26-website.onrender.com)
 
 
 ---
@@ -44,7 +45,7 @@ Nelson Amateur Radio Club (referred to as B26/ Branch 26) needs a public facing 
 
 This is a digital media and database project for **NCEA Level 2**, assessed against standards [91892](docs/as91892.pdf) and [91893](docs/as91892.pdf).
 
-The project is a web app that uses [Flask](https://flask.palletsprojects.com) for the server back-end, connecting to a SQLite database. The final deployment of the app is on [Render](https://render.com/), with the database hosted at [Turso](https://turso.tech/).
+The project is a web app that uses [Flask](https://flask.palletsprojects.com) for the server back-end, connecting to a SQLite database. The final deployment of the app is on [Render](https://render.com/) with a placeholder database held there as well.
 
 The app uses [Jinja2](https://jinja.palletsprojects.com/templates/) templating for structuring pages and data, and [PicoCSS](https://picocss.com/) as the starting point for styling the web front-end.
 
@@ -62,6 +63,5 @@ The project demonstrates a number of **advanced digital media (web) techniques**
 - Using a third-party library
 - Using composite effects
 
-** EDIT THESE LISTS ABOVE TO MATCH YOUR PROJECT**
 
 
