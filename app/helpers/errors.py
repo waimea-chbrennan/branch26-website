@@ -21,26 +21,26 @@ ERR_BAR = f"{ERR_COL}!{Fore.RESET}"
 # 500 Server error page
 #-----------------------------------------------------------
 def server_error(message):
-    return render_template("pages/500.jinja", error=message, user=current_user), 500
+    return render_template("pages/errors/500.jinja", error=message, user=current_user), 500
 
 
 #-----------------------------------------------------------
 # 404 Page not found error page
 #-----------------------------------------------------------
 def not_found_error():
-    return render_template("pages/404.jinja", user=current_user), 404
+    return render_template("pages/errors/404.jinja", user=current_user), 404
 
 #-----------------------------------------------------------
 # 401 unauthorised error
 #-----------------------------------------------------------
 def unauthorised_error():
-    return render_template("pages/401.jinja", user=current_user), 401
+    return render_template("pages/errors/401.jinja", user=current_user), 401
 
 #-----------------------------------------------------------
 # 403 Forbidden error
 #-----------------------------------------------------------
 def forbidden_error():
-    return render_template("pages/403.jinja", user=current_user), 403
+    return render_template("pages/errors/403.jinja", user=current_user), 403
 
 
 
