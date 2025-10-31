@@ -1,6 +1,6 @@
 {#=====================================================
   About Page
-  - TODO: WHAT DOES THIS PAGE DO?
+  - Displays some basic info of the Nelson Amateur Radio Club (simplified for assessment)
 =====================================================#}
 
 
@@ -10,7 +10,7 @@
 
 {% block title %}
 
-    About - NARC
+  About - NARC
 
 {% endblock %}
 
@@ -21,31 +21,34 @@
     <div class="article-img">
       <img src="/static/images/old_repeater.jpg" alt="Historical image of club working on a remote antenna">
     </div>
-    <div class="article-text">
+    <div>
+    <h2>Beginnings</h2>
       <p>Nelson Amateur radio club was formed quite a wee while now but since then we have done a lot.
-      At some point in our history we have been the largest Amateur radio club in all NZ.</p>
+      Not all that long ago we were the largest Amateur radio club in all NZ. Go Nelson!</p>
     </div>
   </article>
 
-<article class="article-card">
-  <div class="article-text">
-    <p>We own and operate repeaters on 2m and 70cm FM on leased sites:</p>
-    <p><strong>147.025 RX 147.625 TX</strong> 7025 is our repeater with most activity.</p>
-    <p><strong>147.200 RX 147.800 TX</strong> 720 focuses on areas towards north of Nelson and is Solar Powered</p>
-  </div>
-  <div class="article-img">
-    <img src="/static/images/fox_hunt.jpg" alt="Club members meeting to discuss transmitter hunt.">
-  </div>
-</article>
+  <article class="article-card">
+    <div>
+      <h2>Repeaters</h2>
+      <p>We own and operate repeaters on 2m and 70cm FM on leased sites:</p>
+      <p><code>147.025 RX 147.625 TX</code> 7025 is our repeater with most activity.</p>
+      <p><code>147.200 RX 147.800 TX</code> 720 focuses on areas towards north of Nelson and is Solar Powered</p>
+    </div>
+    <div class="article-img">
+      <img src="/static/images/fox_hunt.jpg" alt="Club members meeting to discuss transmitter hunt.">
+    </div>
+  </article>
 
-<article class="article-card">
-  <div class="article-img">
-    <img src="/static/images/saddle_hill.jpg" alt="Image from the same repeater site as historical image">
-  </div>  
-  <div class="article-text">
-    <p>We now have over 60 members and host 2 HamCrams each year, allowing people in the Nelson Region to get their ham license.</p>
-  </div>
-</article>
+  <article class="article-card">
+    <div class="article-img">
+      <img src="/static/images/saddle_hill.jpg" alt="Image from the same repeater site as historical image">
+    </div>  
+    <div>
+      <h2>Members</h2>
+      <p>We now have over 60 members and host 2 <a href="/hamcram">HamCrams</a> each year, allowing people in the Nelson Region to get their ham license.</p>
+    </div>
+  </article>
 
     
 

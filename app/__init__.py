@@ -5,7 +5,6 @@
 # Nelson Amateur Radio Club (referred to as B26/ Branch 26) needs a public facing website to promote the hobby of 
 # amateur radio to the public, giving them the opportunity to join the club.
 
-# TODO sanitize inputs
 #===========================================================
 
 from flask import Flask, render_template, request, flash, redirect, abort
@@ -242,19 +241,19 @@ def activities():
 #-----------------------------------------------------------
 # Member approving activity route (login required)
 #-----------------------------------------------------------
-@app.get("/add-approval/<int:activity>")
+@app.get("/add-approval/<int:activity_id>")
 @login_required
-def add_approval(activity):
+def add_approval(activity_id):
     callsign = current_user.callsign
     with connect_db() as client:
         sql = "SELECT posted_by FROM activities WHERE id=?"
-        params = [activity]
+        params = [activity_id]
         activities_rows = client.execute(sql, params)
         activity = activities_rows[0]
 
         sql = "SELECT activity, approver FROM approvals WHERE activity=?"
-        activity_approvers_rows = client.execute(sql, params)
-        activity_approvers = [row["approver"] for row in activity_approvers_rows]
+        approvers_rows = client.execute(sql, params)
+        activity_approvers = [row["approver"] for row in approvers_rows]
 
         # make sure user is not approving own activity (forbidden)
         if (current_user.callsign==activity["posted_by"]):
@@ -265,7 +264,7 @@ def add_approval(activity):
             abort(403)
 
         sql = "INSERT INTO approvals (activity, approver) VALUES (?,?)"
-        params = [activity, current_user.callsign]
+        params = [activity_id, current_user.callsign]
         client.execute(sql, params)
 
   
@@ -280,32 +279,28 @@ def add_approval(activity):
 @app.post("/activities/new")
 @login_required
 def new_activity():
-    start_date = request.form["start_date"] 
-    start_time = request.form["start_time"] 
-    end_date = request.form["end_date"]
-    end_time = request.form["end_time"]
+    #Get fields from form
+    start_date = request.form.get("start_date")
+    start_time = request.form.get("start_time")
+    end_date = request.form.get("end_date")
+    end_time = request.form.get("end_time")
 
     title = request.form.get("title")
     description = request.form.get("description")
     location = request.form.get("location")
-    resource = request.form.get("resource")
+    resource = request.form.get("resource_id")
     approvable = request.form.get("is_approvable")
 
-    # Sanitize 
+    # Sanitize and convert
     approvable = 1 if approvable else 0 
-
     start_datetime = utc_timestamp(start_date, start_time)
     end_datetime = utc_timestamp(end_date, end_time)
     
-
-  
     with connect_db() as client:
         sql = "INSERT INTO activities (posted_by, start_time, end_time, title, description, location, resource, approvable) VALUES (?,?,?,?,?,?,?,?)"
         params = [current_user.callsign, start_datetime, end_datetime, title, description, location, resource, approvable]
         activities = client.execute(sql, params)
-    
 
-    
 
     return redirect("/activities")
 
@@ -407,7 +402,6 @@ def resources():
         sql = "SELECT * FROM resources ORDER BY title ASC"
         params = []
         resources = client.execute(sql, params)
-        # We may have to double check url formatting to fix for html
 
         return render_template("pages/resources.jinja", user=current_user, resources=resources)
 
@@ -421,7 +415,7 @@ def add_resource():
     title = request.form.get("title")
     url = request.form.get("url")
     with connect_db() as client:
-        sql = "INSERT INTO resources (title, url)VALUES (?,?)"
+        sql = "INSERT INTO resources (title, url) VALUES (?,?)"
         params = [title, url]
         resources = client.execute(sql, params)
 
