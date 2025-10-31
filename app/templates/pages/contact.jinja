@@ -17,15 +17,15 @@
 
 
 {% block content %}
-
-    <h2>Our Designated Contacts:</h2>
+  <section class="contact-container">
+    <h1>Contact Us</h1>
 
     <div>
         {% for contact in contacts %}
-            <article>
+            <article class="accent-article">
                 <h3>{{contact.name}} {{contact.callsign}}</h3>
                 {% if contact.email_public%}
-                  <p>Email: {{contact.email}}</p>
+                  <p>Email: <a href="mailto:{{contact.email}}">{{contact.email}}</a></p>
                 {% endif %}
                 {% if contact.phone_public%}
                   <p>Phone: {{contact.phone}}</p>
@@ -33,7 +33,6 @@
             </article>
         {% endfor %}
     </div>
-
-    
+  </section>
 
 {% endblock %}

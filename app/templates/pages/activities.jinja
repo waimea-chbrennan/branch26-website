@@ -18,29 +18,29 @@
 {% block content %}
   <h2>All Upcoming Activities</h2>
 
-  <section>
+  <section class="activity-container">
     {% for activity in activities %}
-      <article>
+      <article class="accent-article">
         <h3>{{ activity.title }}</h3>
         <p>{{ activity.description }}</p>
-        <p>{{ activity.location }}</p>
+        <p>Location: <strong>{{ activity.location }}</strong></p>
         
-        {% if activity.resource_title %} 
-        <a href="{{activity.resource_url}}">{{activity.resource_title}}</a>
-        {% endif %}
-
-        <p>Starts:
+        <p>Starts: <strong>
         {{ activity.start_time | localday }},
         {{ activity.start_time | localdate }} at
         {{ activity.start_time | localtime }}
-        </p>
+        </strong></p>
 
-        <p>Ends: 
+        <p>Ends: <strong>
         {{ activity.end_time | localday }},
         {{ activity.end_time | localdate }} at
         {{ activity.end_time | localtime }}
-        </p>
-
+        </strong></p>
+        
+        {% if activity.resource_title %} 
+        <p>Attached Resource: <a href="{{activity.resource_url}}">{{activity.resource_title}}</a></p>  
+        {% endif %}
+        
         <p>Posted By: {{ activity.posted_by }}</p>
 
         {% if activity.approvable %}
@@ -66,81 +66,59 @@
   
 
   {# New Activity form#}
-  <form action="/activities/new" method="POST">
+  <form action="/activities/new" method="POST" class="form">
     <h2>New Activity</h2>
 
-    Title
-    <input 
-      type="text" 
-      name="title"
-      required
-      >
+    <label>Title
+      <input type="text" name="title" required>
+    </label>
 
-    Description
-    <input 
-      type="text" 
-      name="description"
-      required
-    >
+    <label>Description
+      <input type="text" name="description" required>
+    </label>
 
-    Location
-    <input 
-      type="text" 
-      name="location"
-      required
-    >
+    <label>Location
+      <input type="text" name="location" required>
+    </label>
 
-  Start Date
-  <input 
-    type="date"
-    id="start_date"
-    name="start_date"
-    required
-  >
+    <div class="horizontal">
+      <label>Start Date
+        <input type="date" name="start_date" required>
+      </label>
 
-  Start Time
-  <input 
-    type="time"
-    id="start_time"
-    name="start_time"
-    required
-  >
+      <label>Start Time
+        <input type="time" name="start_time" required>
+      </label>
+    </div>
 
-  End Date
-  <input 
-    type="date"
-    id="end_date"
-    name="end_date"
-    required
-  >
+    <div class="horizontal">
+      <label>End Date
+        <input type="date" name="end_date" required>
+      </label>
 
-  End Time
-  <input 
-    type="time"
-    id="end_time"
-    name="end_time"
-    required
-  >
+      <label>End Time
+        <input type="time" name="end_time" required>
+      </label>
+    </div>
 
+    <label>Associated Resource
+      <select name="resource_id">
+        <option value="">(No resource)</option>
+        {% for resource in resources %}
+          <option value="{{ resource.id }}">{{ resource.title }}</option>
+        {% endfor %}
+      </select>
+    </label>
 
-    Associated Resource
-    <select name="resource_id">
-      <option value="">(No resource)</option>
-      {% for resource in resources %}
-        <option value="{{ resource.id }}">{{ resource.title }}</option>
-      {% endfor %}
-    </select>
+    <div class="horizontal">
+      <label class="inline">
+        <input type="checkbox" name="is_approvable">
+        Request Activity To Be Public?
+      </label>
+      <button type="submit">Post</button>
+    </div>
+  </form>
 
-    
-
-    Request Activity To Be Public?
-    <input 
-      type="checkbox" 
-      name="is_approvable"
-      placeholder="False"
-    >
-
-    <button>Post</button>
 
 
   

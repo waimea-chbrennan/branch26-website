@@ -8,7 +8,7 @@
 # TODO sanitize inputs
 #===========================================================
 
-from flask import Flask, render_template, request, flash, redirect
+from flask import Flask, render_template, request, flash, redirect, abort
 import html
 
 from app.helpers.session import init_session
@@ -51,16 +51,20 @@ def index():
     with connect_db() as client:
         # Only want activities that have had at least 2 approvals
         sql = """
-        SELECT 
-            id, title, description, start_time, end_time, 
-            created_time, posted_by, location
-            FROM activities
-            WHERE id IN (   
-                SELECT
-                activity FROM approvals
-                GROUP BY activity
-                HAVING COUNT(*) > 1
-            );
+            SELECT 
+            activities.*,
+            resources.title AS resource_title,
+            resources.url   AS resource_url
+        FROM activities
+        LEFT JOIN resources
+            ON activities.resource = resources.id
+        WHERE activities.id IN (
+            SELECT activity
+            FROM approvals
+            GROUP BY activity
+            HAVING COUNT(*) > 1
+        )
+        ORDER BY activities.start_time ASC;
         """
         params = []
         result = client.execute(sql, params)
@@ -201,7 +205,16 @@ def process_login():
 def activities():
     # Get ze activities
     with connect_db() as client:
-        sql = "SELECT * FROM activities ORDER BY start_time ASC"
+        sql = """
+            SELECT 
+                activities.*,
+                resources.title AS resource_title,
+                resources.url   AS resource_url
+            FROM activities
+            LEFT JOIN resources
+                ON activities.resource = resources.id
+            ORDER BY activities.start_time ASC
+        """
         params = []
         activities = client.execute(sql, params)
 
@@ -222,7 +235,7 @@ def activities():
             if activity_id not in approvals_by_activity:
                 approvals_by_activity[activity_id] = []
             approvals_by_activity[activity_id].append(approval["approver"])
-            print(approvals_by_activity)
+            #print(approvals_by_activity)
     return render_template("pages/activities.jinja", user=current_user, activities=activities, resources=resources, approvals_by_activity=approvals_by_activity)
 
 
@@ -236,12 +249,20 @@ def add_approval(activity):
     with connect_db() as client:
         sql = "SELECT posted_by FROM activities WHERE id=?"
         params = [activity]
-        activity_by = client.execute(sql, params)
+        activities_rows = client.execute(sql, params)
+        activity = activities_rows[0]
+
+        sql = "SELECT activity, approver FROM approvals WHERE activity=?"
+        activity_approvers_rows = client.execute(sql, params)
+        activity_approvers = [row["approver"] for row in activity_approvers_rows]
 
         # make sure user is not approving own activity (forbidden)
-        if (current_user.callsign):
-            return redirect("/activities/"), 403
+        if (current_user.callsign==activity["posted_by"]):
+            abort(403)
 
+        # make sure user is not approving activity twice (forbidden)
+        if (current_user.callsign in activity_approvers):
+            abort(403)
 
         sql = "INSERT INTO approvals (activity, approver) VALUES (?,?)"
         params = [activity, current_user.callsign]
@@ -259,8 +280,11 @@ def add_approval(activity):
 @app.post("/activities/new")
 @login_required
 def new_activity():
-    start_time = request.form.get("start_time")
-    end_time = request.form.get("end_time")
+    start_date = request.form["start_date"] 
+    start_time = request.form["start_time"] 
+    end_date = request.form["end_date"]
+    end_time = request.form["end_time"]
+
     title = request.form.get("title")
     description = request.form.get("description")
     location = request.form.get("location")
@@ -269,13 +293,15 @@ def new_activity():
 
     # Sanitize 
     approvable = 1 if approvable else 0 
-    start_time = datetime.fromisoformat(start_time)
-    end_time = datetime.fromisoformat(end_time)
+
+    start_datetime = utc_timestamp(start_date, start_time)
+    end_datetime = utc_timestamp(end_date, end_time)
+    
 
   
     with connect_db() as client:
         sql = "INSERT INTO activities (posted_by, start_time, end_time, title, description, location, resource, approvable) VALUES (?,?,?,?,?,?,?,?)"
-        params = [current_user.callsign, start_time, end_time, title, description, location, resource, approvable]
+        params = [current_user.callsign, start_datetime, end_datetime, title, description, location, resource, approvable]
         activities = client.execute(sql, params)
     
 
@@ -410,23 +436,24 @@ def add_resource():
 def show_admin():
     # Determine whether user is a committee member
     if current_user.is_committee:
-        #Get the list of members and activities to prompt deletion
+        #Get the list of members, resources and activities to prompt deletion
         with connect_db() as client:
             sql = "SELECT callsign, name FROM members ORDER BY callsign ASC"
             params = []
             result = client.execute(sql, params)
             members = result.rows
 
-        with connect_db() as client:
             sql = "SELECT id, title, description, posted_by, location FROM activities ORDER BY title ASC"
-            params = []
             result = client.execute(sql, params)
             activities = result.rows
 
-        
-        return render_template("pages/administration.jinja", user=current_user, members=members, activities=activities)
+            sql = "SELECT id, title, url FROM resources ORDER BY title ASC"
+            result = client.execute(sql, params)
+            resources = result.rows
+
+        return render_template("pages/administration.jinja", user=current_user, members=members, activities=activities, resources=resources)
     # Else
-    return redirect("/")
+    abort(401)
 
 #-----------------------------------------------------------
 # Admin remove user
@@ -466,6 +493,25 @@ def delete_activity(id):
     return redirect("/")
 
 
+#-----------------------------------------------------------
+# Admin remove resource
+#-----------------------------------------------------------
+
+@app.get("/admin/remove-resource/<int:id>")
+@fresh_login_required
+def delete_resource(id):
+    #Cant rely on security check on showing admin page, could still send request manually
+    if current_user.is_committee:
+        with connect_db() as client:
+            sql = "DELETE FROM resources WHERE id=?"
+            params = [id]
+            client.execute(sql, params)
+        flash("Resource deleted successfully")
+        return redirect("/admin")
+    # Else
+    return redirect("/")
+
+
 
 
 
@@ -482,7 +528,7 @@ def invite_user():
         user_name = request.form.get("name").title()
         user_callsign = request.form.get("callsign").upper()
         user_email = request.form.get("email")
-        user_password = generate_password_hash(token_urlsafe(7)) # easy implementation of secure temporary password, approx 10 char
+        user_password = token_urlsafe(7) # easy implementation of secure temporary password, approx 10 char
         hashed_user_password = generate_password_hash(user_password)
 
 
@@ -497,7 +543,7 @@ def invite_user():
 
         
 
-        return render_template("pages/administration.jinja", user=current_user)
+        return redirect("/admin")
 
     #Redirect home, 
     return redirect("/")

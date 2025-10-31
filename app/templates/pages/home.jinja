@@ -15,12 +15,12 @@
 
 {% block content %}
 
-    <section class="split-row">
+    <section class="hero-section">
         <img src="static/images/sylvester_antenna.jpeg" alt="Wide shot of antenna setup at Lake Sylvester">
     
-        <div>
+        <div class="hero-text">
             <h1>Nelson Amateur Radio Club</h1>
-            <h2>We are a vibrant amateur radio community with over 60 members in Nelson, NZ!</h2>
+            <p>We are a vibrant amateur radio community with over 60 members in Nelson, NZ!</p>
         </div>
        
     </section>
@@ -30,32 +30,32 @@
         <div>
             <h2>Upcoming Events</h2>
             {% for activity in activities %}
-            <article>
+            <article class="accent-article">
                 <h3>{{ activity.title }}</h3>
                 <p>{{ activity.description }}</p>
-                <p>{{ activity.location }}</p>
+                <p>Location: <strong>{{ activity.location }}</strong></p>
                 
-                {% if activity.resource_title %} 
-                <a href="{{activity.resource_url}}">{{activity.resource_title}}</a>
-                {% endif %}
-
-                <p>Starts:
+                <p>Starts: <strong>
                 {{ activity.start_time | localday }},
                 {{ activity.start_time | localdate }} at
                 {{ activity.start_time | localtime }}
-                </p>
+                </strong></p>
 
-                <p>Ends: 
+                <p>Ends: <strong>
                 {{ activity.end_time | localday }},
                 {{ activity.end_time | localdate }} at
                 {{ activity.end_time | localtime }}
-                </p>
+                </strong></p>
                 
+                {% if activity.resource_title %} 
+                <p>Attached Resource: <a href="{{activity.resource_url}}">{{activity.resource_title}}</a></p>  
+                {% endif %}
+
             </article>
             {% endfor %}
         </div>
 
-        <div>
+        <div class="what-we-do">
             <h2>What we do</h2>
             <img src="static/images/tent_banner.jpg" alt="Radio tent with Nelson radio banner on it">
             <p>We meet regularly and do cool stuff like...

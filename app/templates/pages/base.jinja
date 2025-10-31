@@ -32,12 +32,10 @@
 <body>
 
     <header>
-        <nav>
-            <ul>
-                <li><strong><a href="/">Nelson Amateur Radio Club</a></strong></li>
-            </ul>
+        <nav class="main-nav">
+            <a href="/" class="brand">Nelson Amateur Radio Club</a>
 
-            <ul>
+            <ul class="nav-links">
                 <li><a href="/">Home</a></li>
                 {% if not user.is_authenticated %}
                     <li><a href="/about">About</a></li>
@@ -58,6 +56,7 @@
     </header>
 
 
+
     {# Show flash messages from any previous events #}
     {% include "components/messages.jinja" %}
 
@@ -70,9 +69,7 @@
     </main>
 
 
-    {# Show debug info. Comment this out if not needed #}
-    {% include "components/debug.jinja" %}
-
+   
 </body>
 
 </html>

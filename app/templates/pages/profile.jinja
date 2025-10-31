@@ -18,92 +18,89 @@ TODO seperate into two sections
 
 {% block content %}
 
-    <h2>{{user.name}} - {{user.callsign}}</h2>
+  <h2>{{user.name}} - {{user.callsign}}</h2>
 
-    <section>
-      {# Change User Details Form #}
-      <form action="/profile/update-info" method="POST">
-        Full name
-        <input 
-          type="text"
-          disabled
-          value="{{user.name}}"
-          required
-        >
-        Callsign
-        <input 
-          type="text"
-          disabled
-          value="{{user.callsign}}"
-          required
-        >
-        Email
-        <input 
-          type="email" 
-          name="email" 
-          value="{{user.email}}"
-          required
-        >
-        Phone
-        <input 
-          type="tel"
-          name="phone" 
-          value="{{user.phone}}"
-        >
-        
-        Email visible to public
-        <input 
-          type="checkbox"
-          name="email_visible"
-          {% if user.email_public %}
-          checked
-          {% endif %}
-        >
-        Phone visible to public
-        <input 
-          type="checkbox"
-          name="phone_visible"
-          {% if user.phone_public %}
-          checked=
-          {% endif %}
-        >
+  <section>
+    {# Change User Details Form #}
+    <form action="/profile/update-info" method="POST" class="form">
+      <div class="horizontal">
+        <label>Full name
+          <input type="text" disabled value="{{user.name}}" required>
+        </label>
+        <label>Callsign
+          <input type="text" disabled value="{{user.callsign}}" required>
+        </label>
+      </div>
 
-        <button>Update Info</button>
+      <label>Email
+        <input type="email" name="email" value="{{user.email}}" required>
+      </label>
 
-      </form>
-    </section>
+      <label>Phone
+        <input type="tel" name="phone" value="{{user.phone}}">
+      </label>
+
+      <div class="horizontal">
+        <label> Email visible to public
+          <input 
+            type="checkbox"
+            name="email_visible"
+            {% if user.email_public %}checked{% endif %}
+          >
+        </label>
+
+        <label>
+          Phone visible to public
+          <input 
+            type="checkbox"
+            name="phone_visible"
+            {% if user.phone_public %}checked{% endif %}
+          >
+        </label>
+      </div>
+
+      <button>Update Info</button>
+    </form>
+  </section>
 
 
 
-    <section>
-      {# Change Password Form #}
-      <form action="/profile/update-password" method="POST">
-        Old Password
-        <input 
+  <section>
+    {# Change Password Form #}
+    <form action="/profile/update-password" method="POST" class="form">
+      
+      <div class="horizontal">
+        <label>Old Password
+          <input 
           type="password" 
           name="old_password"
           required
           >
+        </label>
 
-        New Password
+        <label>New Password
+          <input 
+            type="password" 
+            name="new_pass_1"
+            required
+            >
+        </label>
+      </div>
+      
+      <label>Confirm Password
         <input 
-          type="password" 
-          name="new_pass_1"
-          required
-          >
+        type="password" 
+        name="new_pass_2"
+        required
+        >
+      </label>
+      <button>Update Password</button>
 
-        Confirm Password
-        <input 
-          type="password" 
-          name="new_pass_2"
-          required
-          >
-          <button>Update Password</button>
-      </form>
-    </section>
+    </form>
+  </section>
 
 
 
-    
+  
 
 {% endblock %}
