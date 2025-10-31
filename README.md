@@ -24,6 +24,12 @@ Nelson Amateur Radio Club (referred to as B26/ Branch 26) needs a public facing 
 - [Project Documentation](https://waimea-chbrennan.github.io/branch26-website/)
 - [Live web app](https://branch26-website.onrender.com)
 
+**Credentials for moderation**
+
+Primary Callsign: `ZL4MODR`
+
+Password: `fl3xb0x-h34d4ch3-xx`
+Replace xx with the year. Security, Eh?
 
 ---
 
