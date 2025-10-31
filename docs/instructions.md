@@ -89,35 +89,35 @@ Achievement standard [91892](as91892.pdf), Use advanced techniques to develop a 
 Use advanced techniques to develop a database means that, taking into account the problem / need and the end users:
 
 1. You must first define the purpose of your system and the end-users' needs:
-   - [ ] Define the **purpose of the system** that uses the database
-   - [ ] Describe the **needs of the end-users**
-   - [ ] Define the **key functionality** of the proposed system
+   - [x] Define the **purpose of the system** that uses the database
+   - [x] Describe the **needs of the end-users**
+   - [x] Define the **key functionality** of the proposed system
 
 
 2. You need to design the structure of the database:
    - [x] **Tables** - at least two that are linked by a relationship
    - [x] **Data Types** - a range of data types used
    - [x] **Key Fields** - primary keys for each table, foreign keys for relationships
-   - [ ] **Values** - auto-generation / default values as required
+   - [x] **Values** - auto-generation / default values as required
 
 3. You should use appropriate tools and advanced techniques to organise and query the data:
-   - [ ] **Linking data in related tables** using queries or keys
-   - [ ] Writing **custom queries** to filter and/or sort data
-   - [ ] Using **logical, mathematical and/or wildcard operators** as needed
+   - [x] **Linking data in related tables** using queries or keys or logic in any way
+   - [x] Writing **custom queries** to filter and/or sort data
+   - [x] Using **logical, mathematical and/or wildcard operators** as needed
 
 4. You should use appropriate tools and advanced techniques to present the data:
-   - [ ] Customising **presentation** of the data (not just raw data values)
+   - [x] Customising **presentation** of the data (not just raw data values)
    - [x] Using **custom forms** to add user input to the database
    - [x] Setting **validation rules** for data entry
 
 5. You must apply appropriate data integrity and testing procedures: (via testing)
-   - [ ] Show that any **presented data is correct** (e.g. matches database values / calculations)
-   - [ ] Show that any input user data **updates the database as expected**
+   - [x] Show that any **presented data is correct** (e.g. matches database values / calculations)
+   - [x] Show that any input user data **updates the database as expected**
 
 6. You need to explain relevant implications:
-   - [ ] Identify the **implications most relevant** to your project
-   - [ ] Explain **what the implications mean** and **why each is relevant** to your project
-   - [ ] Explain **how each implication will impact your specific project** (considerations / choices / designs)
+   - [x] Identify the **implications most relevant** to your project
+   - [x] Explain **what the implications mean** and **why each is relevant** to your project
+   - [x] Explain **how each implication will impact your specific project** (considerations / choices / designs)
 
 *Note: You must satisfy **all** of the criteria above to pass*
 
@@ -127,16 +127,16 @@ Use advanced techniques to develop a database means that, taking into account th
 Use advanced techniques to develop an informed database means **all the criteria for Achieved**, plus:
 
 1. You should use information from testing procedures to improve the quality of your database:
-   - [ ] Show **evidence of your testing**, particularly with end-users
-   - [ ] Show the **improvements made** as a result
+   - [x] Show **evidence of your testing**, particularly with end-users
+   - [x] Show the **improvements made** as a result
 
 2. You should structure, organise and query your data logically:
-   - [ ] Your tables should be **normalised** (no repeating data)
-   - [ ] Your fields have the **appropriate data type**, **defaults**, etc.
-   - [ ] Your database **queries are well-written and efficient**
+   - [x] Your tables should be **normalised** (no repeating data)
+   - [x] Your fields have the **appropriate data type**, **defaults**, etc.
+   - [x] Your database **queries are well-written and efficient**
 
 3. You must ensure that you have addressed the relevant implications above:
-   - [ ] For each one, you need to **explain what you did in your project to address it**
+   - [x] For each one, you need to **explain what you did in your project to address it**
 
 
 ### Excellence Criteria
@@ -144,12 +144,12 @@ Use advanced techniques to develop an informed database means **all the criteria
 Use advanced techniques to develop a refined database means **all of the criteria for Merit**, plus:
 
 1. You have made iterative improvements throughout the design, development and testing process:
-   - [ ] You have refined features of the DB (the schema and the UI) over **multiple iterations**
-   - [ ] Each iteration is **clearly documented**, showing testing and resulting refinements (ie making a change and making sure that it works)
+   - [x] You have refined features of the DB (the schema and the UI) over **multiple iterations**
+   - [x] Each iteration is **clearly documented**, showing testing and resulting refinements (ie making a change and making sure that it works)
 
 2. You present the data from the database effectively for the purpose and end users:
-   - [ ] Data is displayed in ways that make its **meaning clear** (e.g. using colour)
-   - [ ] Data is **displayed in interesting and creative ways** to meet the needs of the user and satisfy the system requirements
+   - [x] Data is displayed in ways that make its **meaning clear** (e.g. using colour)
+   - [x] Data is **displayed in interesting and creative ways** to meet the needs of the user and satisfy the system requirements
 
 
 ---
@@ -172,9 +172,9 @@ Achievement standard [91893](as91893.pdf), Use advanced techniques to develop a 
 Use advanced techniques to develop a digital media outcome means that, taking into account the problem / need and the end users:
 
 1. You must first define the purpose of your system and the end-users' needs:
-   - [ ] Define the **purpose of the system** that uses the database
-   - [ ] Describe the **needs of the end-users**
-   - [ ] Define the **key functionality** of the proposed system
+   - [x] Define the **purpose of the system** that uses the database
+   - [x] Describe the **needs of the end-users**
+   - [x] Define the **key functionality** of the proposed system
 
 2. You need to use appropriate advanced tools and techniques:
    - [x] You have used a suitable third-party **web back-end library** (e.g. Flask / Jinja)
@@ -182,19 +182,19 @@ Use advanced techniques to develop a digital media outcome means that, taking in
    - [x] You have processed data using a **combination of steps** (e.g. data obtained via DB queries, inserted into HTML templates, styled via CSS)
 
 3. You must apply appropriate data integrity and testing procedures:
-   - [ ] All webpage text should be checked for **accuracy** (e.g. spell-checked)
-   - [ ] Any **data shown is as expected** (i.e. matches database / calculated values)
+   - [x] All webpage text should be checked for **accuracy** (e.g. spell-checked)
+   - [x] Any **data shown is as expected** (i.e. matches database / calculated values)
 
 4. You need to use relevant conventions for a web site:
-   - [ ] **Webpage layouts** follow accepted norms
-   - [ ] **Data entry forms** follow accepted norms
-   - [ ] **Site navigation** follows accepted norms
+   - [x] **Webpage layouts** follow accepted norms
+   - [x] **Data entry forms** follow accepted norms
+   - [x] **Site navigation** follows accepted norms
 
 
 5. You need to explain relevant implications:
-   - [ ] Identify the **implications most relevant** to your project
-   - [ ] Explain **what the implications mean** and **why each is relevant** to your project
-   - [ ] Explain **how each implication will impact your specific project** (considerations / choices / designs)
+   - [x] Identify the **implications most relevant** to your project
+   - [x] Explain **what the implications mean** and **why each is relevant** to your project
+   - [x] Explain **how each implication will impact your specific project** (considerations / choices / designs)
 
 *Note: You must satisfy **all** of the criteria above to pass*
 
@@ -208,12 +208,12 @@ Use advanced techniques to develop an informed digital media outcome means **all
    - [x] Show the **improvements made** as a result
 
 2. You should apply relevant conventions to improve the quality of the outcome:
-   - [ ] Your web site works on a **variety of screen sizes** (as appropriate)
-   - [ ] You have **addressed accessibility** through the use of semantic tags, image alt text, etc.
-   - [ ] **Navigation is easy to use** throughout the site
+   - [x] Your web site works on a **variety of screen sizes** (as appropriate)
+   - [x] You have **addressed accessibility** through the use of semantic tags, image alt text, etc.
+   - [x] **Navigation is easy to use** throughout the site
 
 3. You must ensure that you have addressed the relevant implications above:
-   - [ ] For each one, you need to **explain what you did in your project to address it**
+   - [x] For each one, you need to **explain what you did in your project to address it**
 
 
 ### Excellence Criteria
@@ -221,16 +221,16 @@ Use advanced techniques to develop an informed digital media outcome means **all
 Use advanced techniques to develop a refined digital media outcome means **all of the criteria for Merit**, plus:
 
 1. You have made iterative improvements throughout the design, development and testing process:
-   - [ ] You have refined features of the web site (layout, theme, etc.) over **multiple iterations**
-   - [ ] Each iteration is **clearly documented**, showing testing and resulting refinements
+   - [x] You have refined features of the web site (layout, theme, etc.) over **multiple iterations**
+   - [x] Each iteration is **clearly documented**, showing testing and resulting refinements
 
 2. You have used efficient tools and techniques in the web site's production:
-   - [ ] Your project **assets are managed well** (file naming, appropriate folders, etc.)
-   - [ ] You have used your own **stylesheets** to customise the look of the site
-   - [ ] You have made good use of **templates** (Jinja) to organise and structure content
-   - [ ] Your code is **commented** as needed
-   - [ ] Any generated **HTML has been validated**
-   - [ ] Your **CSS has been validated**
-   - [ ] You have **optimised media assets** (e.g. image sizing)
+   - [x] Your project **assets are managed well** (file naming, appropriate folders, etc.)
+   - [x] You have used your own **stylesheets** to customise the look of the site
+   - [x] You have made good use of **templates** (Jinja) to organise and structure content
+   - [x] Your code is **commented** as needed
+   - [x] Any generated **HTML has been validated**
+   - [x] Your **CSS has been validated**
+   - [x] You have **optimised media assets** (e.g. image sizing)
 
 
