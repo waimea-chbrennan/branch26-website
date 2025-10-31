@@ -59,7 +59,7 @@ def init_error(app):
     #------------------------------
     # 403 Forbidden error page
     #------------------------------
-    @app.errorhandler(404)
+    @app.errorhandler(403)
     def show_forbidden(e):
         return forbidden_error()
 

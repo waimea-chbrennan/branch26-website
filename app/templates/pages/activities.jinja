@@ -16,113 +16,135 @@
 
 
 {% block content %}
-<h2>All Upcoming Activities</h2>
+  <h2>All Upcoming Activities</h2>
 
-<section>
-  {% for activity in activities %}
-    <article>
-      <h3>{{ activity.title }}</h3>
-      <p>{{ activity.description }}</p>
-      <p>{{ activity.location }}</p>
-
-      <p>Starts:
-  {{ activity.start_time | localday }},
-  {{ activity.start_time | localdate }} at
-  {{ activity.start_time | localtime }}
-</p>
-      <p>Ends: 
-      {{ activity.end_time | localday }}
-      {{ activity.end_time | localtime }}
-
-      </p>
-      <p>Posted By: {{ activity.posted_by }}</p>
-
-      {% if activity.approvable %}
-      <p>
-      
-        {% set a = approvals_by_activity.get(activity.id) %}
-        {% if a %}
-          Approved by: {{ a | join(', ') }}
-        {% else %}
-          Approved by: (none yet)
-        {% endif %}
-      </p>
-       
+  <section>
+    {% for activity in activities %}
+      <article>
+        <h3>{{ activity.title }}</h3>
+        <p>{{ activity.description }}</p>
+        <p>{{ activity.location }}</p>
         
-        <a href="/add-approval/{{ activity.id }}">Add Your Approval</a>
-      {% endif %}
-    </article>
-  {% endfor %}
-</section>
+        {% if activity.resource_title %} 
+        <a href="{{activity.resource_url}}">{{activity.resource_title}}</a>
+        {% endif %}
+
+        <p>Starts:
+        {{ activity.start_time | localday }},
+        {{ activity.start_time | localdate }} at
+        {{ activity.start_time | localtime }}
+        </p>
+
+        <p>Ends: 
+        {{ activity.end_time | localday }},
+        {{ activity.end_time | localdate }} at
+        {{ activity.end_time | localtime }}
+        </p>
+
+        <p>Posted By: {{ activity.posted_by }}</p>
+
+        {% if activity.approvable %}
+          <p>
+            {% set a = approvals_by_activity.get(activity.id) %}
+            {% if a %}
+              Approved by: {{ a | join(', ') }}
+            {% else %}
+              Approved by: (none yet)
+            {% endif %}
+          </p>
+          {% if (not a or user.callsign not in a) and user.callsign not in activity.posted_by %}
+            <a href="/add-approval/{{ activity.id }}">Add Your Approval</a>
+          {% endif %}
+
+        {% endif %}
+      </article>
+    {% endfor %}
+  </section>
 
     
 
+  
+
+  {# New Activity form#}
+  <form action="/activities/new" method="POST">
+    <h2>New Activity</h2>
+
+    Title
+    <input 
+      type="text" 
+      name="title"
+      required
+      >
+
+    Description
+    <input 
+      type="text" 
+      name="description"
+      required
+    >
+
+    Location
+    <input 
+      type="text" 
+      name="location"
+      required
+    >
+
+  Start Date
+  <input 
+    type="date"
+    id="start_date"
+    name="start_date"
+    required
+  >
+
+  Start Time
+  <input 
+    type="time"
+    id="start_time"
+    name="start_time"
+    required
+  >
+
+  End Date
+  <input 
+    type="date"
+    id="end_date"
+    name="end_date"
+    required
+  >
+
+  End Time
+  <input 
+    type="time"
+    id="end_time"
+    name="end_time"
+    required
+  >
+
+
+    Associated Resource
+    <select name="resource_id">
+      <option value="">(No resource)</option>
+      {% for resource in resources %}
+        <option value="{{ resource.id }}">{{ resource.title }}</option>
+      {% endfor %}
+    </select>
+
     
 
-    {# New Activity form#}
-    <form action="/activities/new" method="POST">
-      <h2>New Activity</h2>
+    Request Activity To Be Public?
+    <input 
+      type="checkbox" 
+      name="is_approvable"
+      placeholder="False"
+    >
 
-      Title
-      <input 
-        type="text" 
-        name="title"
-        required
-        >
-
-      Description
-      <input 
-        type="text" 
-        name="description"
-        required
-      >
-
-      Location
-      <input 
-        type="text" 
-        name="location"
-        required
-      >
-
-      Start Time
-      <input 
-        type="datetime-local"
-        name="start_time"
-        required
-      >
-
-      End Time
-      <input 
-        type="datetime-local"
-        name="end_time"
-        required
-      >
-      <datalist id="resources">
-        {%  for resource in resources %}
-        <option value="{{resource.title}}">
-        {% endfor %}
-      </datalist>
-
-      Associated Resources
-      <input
-        type="search"
-        list="resources"
-        name="resource"
-        pattern="^({{ resources | map(attribute='title') | join('|') }})"
-      >
-
-      Request Activity To Be Public?
-      <input 
-        type="checkbox" 
-        name="is_approvable"
-        placeholder="False"
-      >
-
-      <button>Post</button>
+    <button>Post</button>
 
 
-    
-    
-    </form>
+  
+  
+  </form>
 
 {% endblock %}

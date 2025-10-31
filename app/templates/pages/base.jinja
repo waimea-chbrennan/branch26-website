@@ -48,6 +48,9 @@
                     <li><a href="/activities">Activities</a></li>
                     <li><a href="/resources">Resources</a></li>
                     <li><a href="/profile">My Profile</a></li>
+                    {% if user.is_committee %}
+                        <li><a href="/admin">Admin</a></li>
+                    {% endif %}
                     <li><a role="button" href="/logout">Log Out</a></li>
                 {% endif %}
             </ul>

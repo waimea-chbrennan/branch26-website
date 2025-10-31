@@ -30,16 +30,28 @@
         <div>
             <h2>Upcoming Events</h2>
             {% for activity in activities %}
-                <article>
-                    <h3>{{activity.title}}</h3>
-                    <p>{{activity.description}}</p>
-                    <p>{{activity.location}}</p>
-                    <p>Starts: {{activity.start_time}}</p>
-                    <p>Ends: {{activity.end_time}}</p>
+            <article>
+                <h3>{{ activity.title }}</h3>
+                <p>{{ activity.description }}</p>
+                <p>{{ activity.location }}</p>
+                
+                {% if activity.resource_title %} 
+                <a href="{{activity.resource_url}}">{{activity.resource_title}}</a>
+                {% endif %}
 
-                    <p>Posted By: {{activity.posted_by}}</p>
+                <p>Starts:
+                {{ activity.start_time | localday }},
+                {{ activity.start_time | localdate }} at
+                {{ activity.start_time | localtime }}
+                </p>
 
-                </article>
+                <p>Ends: 
+                {{ activity.end_time | localday }},
+                {{ activity.end_time | localdate }} at
+                {{ activity.end_time | localtime }}
+                </p>
+                
+            </article>
             {% endfor %}
         </div>
 

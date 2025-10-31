@@ -51,10 +51,10 @@
     <section>
       <h2>Manage Members</h2>
       {% for member in members %}
-        <div>
+        <article>
           <h4>{{member.name}} {{member.callsign}}</h4>
           <a onclick="return confirm_action('{{member.callsign}}')" href="/admin/remove-member/{{member.callsign}}">Delete Member Permanently</a>
-        </div>
+        </article>
       {% endfor %}
     </section>
 
@@ -62,13 +62,23 @@
     <section>
       <h2>Manage Activities</h2>
       {% for activity in activities %}
-        <div>
+        <article>
           <h4>{{activity.title}}</h4>
           <p>{{activity.description}}</p>
           <p>Location: {{activity.location}}</p>
           <p>Posted By: {{activity.posted_by}}</p>
           <a onclick="return confirm_action('{{activity.title}}')" href="/admin/remove-activity/{{activity.id}}">Delete Activity Permanently</a>
-        </div>
+        </article>
+      {% endfor %}
+    </section>
+
+    <section>
+      <h2>Manage Resources</h2>
+      {% for resource in resources %}
+        <article>
+          <a href="{{resource.url}}"><h4>{{resource.title}}</h4></a>
+          <a onclick="return confirm_action('{{resource.title}}')" href="/admin/remove-resource/{{resource.id}}">Delete Resource Permanently</a>
+        </article>
       {% endfor %}
     </section>
 
